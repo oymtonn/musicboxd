@@ -12,7 +12,7 @@ function Layout() {
                     </li>
                     <li>
                         <Link to="create">
-                            Home
+                            Post
                         </Link>
                     </li>
                     {/* <li>

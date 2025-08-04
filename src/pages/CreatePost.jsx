@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../client.js'
+import CreatePostForm from './CreatePostForm'
 
 function CreatePost() {
     const [post, setPost] = useState({title: "", content: "", image_url: ""})
@@ -9,16 +10,30 @@ function CreatePost() {
         setPost(prev => ({ ...prev, [name]: value }))
       }
 
-    const createPost = async (event) =>{
-        event.preventDefault()
-
+      const createPost = async (event) => {
+        event.preventDefault();
+      
         await supabase
-            .from('Posts')
-            .insert({title: post.title, content: post.content, image_url: post.image_url})
-            .select()
+          .from('Posts')
+          .insert({
+            title: post.title,
+            content: post.content,
+            image_url: post.image_url,
+          })
+          .select();
 
-        window.location = "/"
-    }
+        window.location = "/";
+      };
+      
 
-    
+    return (
+        <CreatePostForm 
+            onChange={handleChange}
+            onSubmit={createPost}
+        />
+    )
+
+
 }
+
+export default CreatePost
