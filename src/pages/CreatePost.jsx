@@ -3,7 +3,7 @@ import { supabase } from '../client.js'
 import CreatePostForm from './CreatePostForm'
 
 function CreatePost() {
-    const [post, setPost] = useState({title: "", content: "", stars: "", upvotes: ""})
+    const [post, setPost] = useState({title: "", content: "", stars: "", upvotes: "", image_url: ""})
     const [file, setFile] = useState()
 
     const handleFileChange = (event) => {
@@ -24,7 +24,18 @@ function CreatePost() {
       const createPost = async (event) => {
         event.preventDefault();
 
-        await uploadFile()
+        let filePath = null
+        
+        if (file) {
+            filePath = await uploadFile()
+
+            if (!filePath) {
+                alert('File uplaod failed!!!')
+                return
+            }
+        }
+
+        console.log(filePath)
       
         const { data, error } = await supabase
           .from('Posts')
@@ -32,7 +43,8 @@ function CreatePost() {
             title: post.title,
             content: post.content,
             stars: post.stars,
-            upvotes: post.upvotes
+            upvotes: post.upvotes,
+            image_url: filePath
           })
           .select()
 
@@ -49,6 +61,8 @@ function CreatePost() {
         if (error) {
           console.log(error)
       }
+
+      return filePath
     }
 
 
