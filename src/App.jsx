@@ -1,64 +1,49 @@
 import { useState, useEffect } from 'react'
 import './App.css'
 import { supabase } from './client'
+import { Link } from 'react-router-dom'
 
 function App() {
     const [posts, setPosts] = useState([])
     
     useEffect(() => {
         const fetchPosts = async () => {
-      
           const { data, error } = await supabase
             .from('Posts')
-            .select()
+            .select('id, title, created_at, upvotes')
             .order('created_at', { ascending: false })
-      
-          if (error) {
-            console.log(error)
-          } else {
-            setPosts(data)
-          }
+    
+          if (error) console.log(error)
+          else setPosts(data)
         }
-      
         fetchPosts()
       }, [])
-      
-
+    
       return (
         <div className="posts-container">
-          {posts.map((post) => {
-            console.log(`Image URL: https://frpudzyrjhtbfnqltfzy.supabase.co/storage/v1/object/public/uploads/${post.image_url}`)
-      
-            return (
-                <div key={post.id} className="post-card">
-                <div className="top-row">
-                    <h2>{post.title}</h2>
-                    <div className="stars">⭐ {post.stars}</div>
-                </div>
-                
-                <div className="content">
-                {post.image_url && (
-                    <div className="post-image-wrapper">
-                    <img
-                        className="post-image"
-                        src={`https://frpudzyrjhtbfnqltfzy.supabase.co/storage/v1/object/public/uploads/${post.image_url}`}
-                        alt="Post"
-                    />
-                    </div>
-                )}
-                <div className="post-text">{post.content}</div>
-                </div>
-                
-                <button className="upvote-button">
-                    ⬆️ {post.upvotes}
-                </button>
-
-                </div>
-            )
-          })}
+          {posts.map((post) => (
+            <Link
+              to={`/post/${post.id}`}
+              key={post.id}
+              className="post-list-item"
+              style={{
+                display: 'block',
+                padding: '5rem 10rem',
+                marginBottom: '1rem',
+                border: '1px solid #ccc',
+                borderRadius: '8px',
+                textDecoration: 'none',
+                backgroundColor:'black',
+                color: 'white',
+              }}
+            >
+              <h2>{post.title}</h2>
+              <div>Created: {new Date(post.created_at).toLocaleDateString()}</div>
+              <div>⬆️ {post.upvotes}</div>
+            </Link>
+          ))}
         </div>
       )
-      
 }
 
 export default App
