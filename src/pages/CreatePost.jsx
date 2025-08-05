@@ -48,8 +48,8 @@ function CreatePost() {
           })
           .select()
 
-          if (error){
-            console.log(error)
+          if (error) {
+            console.error("Upload error:", error.message, file);
           }
 
       };
@@ -59,8 +59,8 @@ function CreatePost() {
         const filePath = `${Date.now()}_${fileName}`
         const { data, error } = await supabase.storage.from('uploads').upload(filePath, file)
         if (error) {
-          console.log(error)
-      }
+            console.error("Upload error:", error.message, file);
+        }
 
       return filePath
     }
