@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { supabase } from '../client'
 import './PostPage.css'
@@ -8,10 +8,11 @@ function PostPage() {
   const [post, setPost] = useState(null)
   const [comments, setComments] = useState([])
   const [newComment, setNewComment] = useState({ name: '', content: '' })
-  const [upOrDown, setUpOrDown] = useState(1); // 1 for upvote, -1 for undo/downvote
 
   const handleUpvotes = async () => {
-    const updatedUpvotes = post.upvotes + upOrDown;
+
+    let updatedUpvotes = post.upvotes
+    updatedUpvotes += 1
   
     setPost(prev => ({ ...prev, upvotes: updatedUpvotes }));
   
@@ -20,7 +21,6 @@ function PostPage() {
       .update({ upvotes: updatedUpvotes })
       .eq('id', post.id);
   
-    setUpOrDown(prev => prev * -1); // toggle upOrDown
   };
 
   useEffect(() => {
@@ -77,14 +77,18 @@ function PostPage() {
     window.location = `/post/${id}`
   }
   
-
-  if (!post) return <div>Loading...</div>
+  if (!post) {
+    return <div>Loading...</div>
+  }
 
   return (
         <div className="post-card">
         <div className="top-row">
             <h2>{post.title}</h2>
             <div className="stars">⭐ {post.stars}</div>
+            <Link to={`/edit/${post.id}`}>
+                Edit
+            </Link>
         </div>
 
         <div className="content">

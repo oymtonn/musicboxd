@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react'
 import { supabase } from '../client.js'
 import CreatePostForm from './CreatePostForm'
 
-function CreatePost() {
-    const [post, setPost] = useState({title: "", content: "", stars: "", upvotes: "", image_url: ""})
+function CreatePost( {editingPost} ) {
+    const [post, setPost] = useState({title: "", content: "", stars: 0, upvotes: 0, image_url: ""})
     const [file, setFile] = useState()
 
     const handleFileChange = (event) => {
@@ -21,7 +21,19 @@ function CreatePost() {
         setPost(prev => ({ ...prev, [name]: value }))
       }
 
-      const createPost = async (event) => {
+    useEffect(() => {
+        if ( editingPost ){
+            setPost({
+                title: editingPost.title || "",
+                content: editingPost.content || "",
+                stars: editingPost.stars || "",
+                upvotes: editingPost.upvotes || "",
+                image_url: editingPost.image_url || ""
+            })
+        }
+    }, [editingPost])
+
+    const createPost = async (event) => {
         event.preventDefault();
 
         let filePath = null
@@ -35,44 +47,70 @@ function CreatePost() {
             }
         }
 
+        if (post.title === "") {
+            alert('Title is required!')
+            return
+        }
+        else if (post.stars === "") {
+            alert('Give your rating!')
+            return
+        }
+
         console.log(filePath)
-      
-        const { data, error } = await supabase
-          .from('Posts')
-          .insert({
-            title: post.title,
-            content: post.content,
-            stars: post.stars,
-            upvotes: post.upvotes,
-            image_url: filePath
-          })
-          .select()
 
-          if (error) {
-            console.error("Upload error:", error.message, file);
-          }
+        if (editingPost) {
+            const { data, error } = await supabase
+            .from('Posts')
+            .update({
+              title: post.title,
+              content: post.content,
+              stars: post.stars,
+              upvotes: post.upvotes,
+              image_url: filePath
+            })
+            .eq('id', id)
+  
+            if (error) {
+              console.error("Upload error:", error.message, file);
+            }
+        }
+        else {
+            const { data, error } = await supabase
+            .from('Posts')
+            .insert({
+              title: post.title,
+              content: post.content,
+              stars: post.stars,
+              upvotes: post.upvotes,
+              image_url: filePath
+            })
+            .select()
+  
+            if (error) {
+              console.error("Upload error:", error.message, file);
+            }
+        }
+       
+        window.location = "/"
 
-      };
+    };
     
-      const uploadFile = async () => {
+    const uploadFile = async () => {
         const fileName = cleanFileName(file.name)
-        const filePath = `${Date.now()}_${fileName}`
-        const { data, error } = await supabase.storage.from('uploads').upload(filePath, file)
+        const { data, error } = await supabase.storage.from('uploads').upload(fileName, file)
         if (error) {
             console.error("Upload error:", error.message, file);
         }
 
-      return filePath
+      return fileName
     }
-
-
-      
 
     return (
         <CreatePostForm 
             onChange={handleChange}
             onSubmit={createPost}
             onFileChange={handleFileChange}
+            post={post}
         />
     )
 

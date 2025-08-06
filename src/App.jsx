@@ -28,10 +28,10 @@ function App() {
               className="post-list-item"
               style={{
                 display: 'block',
-                padding: '5rem 10rem',
-                marginBottom: '1rem',
+                padding: '5rem 20rem',
+                marginBottom: '0.5rem',
                 border: '1px solid #ccc',
-                borderRadius: '8px',
+                borderRadius: '2px',
                 textDecoration: 'none',
                 backgroundColor:'black',
                 color: 'white',
