@@ -28,13 +28,14 @@ function App() {
               className="post-list-item"
               style={{
                 display: 'block',
-                padding: '5rem 20rem',
+                padding: '3rem 30rem',
                 marginBottom: '0.5rem',
                 border: '1px solid #ccc',
                 borderRadius: '2px',
                 textDecoration: 'none',
                 backgroundColor:'black',
                 color: 'white',
+                boxShadow: '0 8px 24px rgba(0, 0, 0, 0.4)'
               }}
             >
               <h2>{post.title}</h2>
