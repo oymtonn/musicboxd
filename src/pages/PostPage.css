@@ -15,6 +15,52 @@
     margin: 0 auto 4rem auto;
   }
   
+  /* Top row: flex container with space between title/stars and Edit */
+  .post-card > .top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; /* align edit button to top */
+  }
+  
+  /* Container for title and stars stacked vertically */
+  .title-stars {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Title */
+  .post-card h2 {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin: 0;
+    text-align: left;
+  }
+  
+  /* Stars below title */
+  .post-card .stars {
+    font-size: 1.2rem;
+    font-weight: 600;
+    white-space: nowrap;
+    margin-top: 0.25rem; /* small spacing below title */
+    margin-right:10rem;
+  }
+  
+  /* Keep edit link top right */
+  .edit-link {
+    align-self: flex-start;
+    font-weight: 600;
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+  }
+  
+  .edit-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  
   .post-text {
     flex: 1;
     display: flex;
@@ -24,29 +70,6 @@
     overflow-wrap: break-word;
     white-space: normal;
     font-size: 1.1rem;
-  }
-  
-  /* Top row: title left, stars right */
-  .post-card > .top-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  /* Title */
-  .post-card h2 {
-    font-size: 1.8rem;
-    font-weight: bold;
-    margin: 0;
-    flex-grow: 1;
-    text-align: left;
-  }
-  
-  /* Stars */
-  .post-card .stars {
-    font-size: 1.2rem;
-    font-weight: 600;
-    white-space: nowrap;
   }
   
   /* Content row: image and text side by side */
@@ -143,5 +166,45 @@
     border: none;
     border-radius: 6px;
     cursor: pointer;
+  }
+
+  button:hover{
+    background-color:#8d919582;
+  }
+  
+  /* Wrapper around comments section with different background */
+  .comment-wrapper {
+    background-color: rgba(255, 255, 255, 0.069);
+    padding: 1.5rem;
+    border-radius: 10px;
+    margin-top: 2rem;
+  }
+  
+  .comment-form input,
+  .comment-form textarea {
+    display: block;
+    width: 100%;
+    margin-bottom: 0.75rem;
+    padding: 0.5rem;
+    font-size: 1rem;
+  }
+  
+
+  .deleteButton {
+    position: absolute;
+    bottom: 1rem;
+    right: 1.5rem;
+    background-color: rgba(255, 0, 0, 0.379);
+    border: none;
+    border-radius: 999px;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .deleteButton:hover {
+    background-color: rgba(255, 0, 0, 0.604);
   }
   

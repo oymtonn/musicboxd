@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../client.js'
 import CreatePostForm from './CreatePostForm'
+import { useParams } from 'react-router-dom'
 
 function CreatePost( {editingPost} ) {
     const [post, setPost] = useState({title: "", content: "", stars: 0, upvotes: 0, image_url: ""})
     const [file, setFile] = useState()
+    const { id } = useParams()
 
     const handleFileChange = (event) => {
         setFile(event.target.files[0])
@@ -35,6 +37,7 @@ function CreatePost( {editingPost} ) {
 
     const createPost = async (event) => {
         event.preventDefault();
+        console.log("triggered")
 
         let filePath = null
         
@@ -56,24 +59,38 @@ function CreatePost( {editingPost} ) {
             return
         }
 
+        if (post.stars < 1 || post.stars > 5) {
+            alert('Star rating has to be between 1-5!')
+            return
+        }
+
+        post.stars = Number(post.stars)
+        post.upvotes = Number(post.upvotes) || 0
+
         console.log(filePath)
 
         if (editingPost) {
+            console.log("Updating post with ID:", id);
+            console.log("Post data before update:", post);
+          
+            const imageToSave = filePath || post.image_url;
+          
             const { data, error } = await supabase
-            .from('Posts')
-            .update({
-              title: post.title,
-              content: post.content,
-              stars: post.stars,
-              upvotes: post.upvotes,
-              image_url: filePath
-            })
-            .eq('id', id)
-  
+              .from('Posts')
+              .update({
+                title: post.title,
+                content: post.content,
+                stars: post.stars,
+                upvotes: post.upvotes,
+                image_url: imageToSave
+              })
+              .eq('id', id);
+          
             if (error) {
               console.error("Upload error:", error.message, file);
             }
-        }
+          }
+          
         else {
             const { data, error } = await supabase
             .from('Posts')

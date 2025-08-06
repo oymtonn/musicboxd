@@ -23,6 +23,17 @@ function PostPage() {
   
   };
 
+  const handleDelete = async (event) => {
+      event.preventDefault()
+
+      await supabase
+        .from('Posts')
+        .delete()
+        .eq('id', id)
+
+      window.location = "/"
+  }
+
   useEffect(() => {
     const fetchPost = async () => { 
       const { data, error } = await supabase
@@ -84,11 +95,13 @@ function PostPage() {
   return (
         <div className="post-card">
         <div className="top-row">
+        <div className="title-stars">
             <h2>{post.title}</h2>
-            <div className="stars">⭐ {post.stars}</div>
-            <Link to={`/edit/${post.id}`}>
-                Edit
-            </Link>
+            <div className="stars">⭐ {post.stars} / 5 </div>
+        </div>
+        <Link to={`/edit/${post.id}`} className="edit-link">
+            Edit
+        </Link>
         </div>
 
         <div className="content">
@@ -107,46 +120,54 @@ function PostPage() {
             <div className="post-text">{post.content}</div>
             </div>
 
-
-        <button onClick={handleUpvotes} className="upvote-button">Upvotes: {post.upvotes} ^</button>
+        <div className="buttons-row">
+        <button onClick={handleUpvotes} className="upvote-button">
+            Upvotes: {post.upvotes} ^
+        </button>
+        <button className="deleteButton" onClick={handleDelete}>
+            Delete
+        </button>
+        </div>
 
       {/* Comments Section */}
-      <div className="comments-section" style={{ marginTop: '2rem' }}>
-        <h3>Comments</h3>
+      <div className="comment-wrapper">
+        <div className="comments-section" style={{ marginTop: '2rem' }}>
+            <h3>Comments</h3>
 
-        {comments.length === 0 && <p>No comments yet.</p>}
-        {comments.map((comment) => (
-          <div key={comment.id} className="comment" style={{ padding: '0.5rem 0', borderBottom: '1px solid #444' }}>
-            <strong>{comment.name}</strong>:
-            <p style={{ margin: '0.3rem 0' }}>{comment.content}</p>
-            <small style={{ fontSize: '0.75rem', opacity: 0.7 }}>
-              {new Date(comment.created_at).toLocaleString()}
-            </small>
-          </div>
-        ))}
+            {comments.length === 0 && <p>No comments yet.</p>}
+            {comments.map((comment) => (
+            <div key={comment.id} className="comment" style={{ padding: '0.5rem 0', borderBottom: '1px solid #444' }}>
+                <strong>{comment.name}</strong>:
+                <p style={{ margin: '0.3rem 0' }}>{comment.content}</p>
+                <small style={{ fontSize: '0.75rem', opacity: 0.7 }}>
+                {new Date(comment.created_at).toLocaleString()}
+                </small>
+            </div>
+            ))}
 
-        {/* Comment Form */}
-        <form onSubmit={handleCommentSubmit} style={{ marginTop: '1rem' }}>
-          <input
-            type="text"
-            placeholder="Your name (optional)"
-            value={newComment.name}
-            onChange={(e) => setNewComment({ ...newComment, name: e.target.value })}
-            style={{ display: 'block', marginBottom: '0.5rem', padding: '0.5rem', width: '100%' }}
-          />
-          <textarea
-            placeholder="Write a comment..."
-            value={newComment.content}
-            onChange={(e) => setNewComment({ ...newComment, content: e.target.value })}
-            style={{ display: 'block', marginBottom: '0.5rem', padding: '0.5rem', width: '100%' }}
-            rows={3}
-            required
-          />
-          <button type="submit" style={{ padding: '0.5rem 1rem' }}>
-            Post Comment
-          </button>
-        </form>
-      </div>
+            {/* Comment Form */}
+            <form onSubmit={handleCommentSubmit} style={{ marginTop: '1rem' }}>
+            <input
+                type="text"
+                placeholder="Your name (optional)"
+                value={newComment.name}
+                onChange={(e) => setNewComment({ ...newComment, name: e.target.value })}
+                style={{ display: 'block', marginBottom: '0.5rem', padding: '0.5rem', width: '100%' }}
+            />
+            <textarea
+                placeholder="Write a comment..."
+                value={newComment.content}
+                onChange={(e) => setNewComment({ ...newComment, content: e.target.value })}
+                style={{ display: 'block', marginBottom: '0.5rem', padding: '0.5rem', width: '100%' }}
+                rows={3}
+                required
+            />
+            <button type="submit" style={{ padding: '0.5rem 1rem' }}>
+                Post Comment
+            </button>
+            </form>
+            </div>
+        </div>
     </div>
   )
 }

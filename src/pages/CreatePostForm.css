@@ -3,8 +3,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 3rem 1rem;
-    min-height: 100vh;
+    padding: 1rem 1rem;
+    min-height: 80vh;
     min-width: 70vw;
     border-radius: 12px;
     background-color: #000;
@@ -51,8 +51,8 @@
   
   /* Submit button */
   .create-post-form button {
-    background-color: #fff;
-    color: #000;
+    background-color: #3a3a3a;
+    color: white;
     border: none;
     padding: 0.75rem 1.5rem;
     border-radius: 5px;
@@ -64,7 +64,7 @@
   }
   
   .create-post-form button:hover {
-    background-color: #ccc;
+    background-color: #cccccc56;
   }
   
   /* Image preview section */

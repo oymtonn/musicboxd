@@ -10,6 +10,8 @@ function EditPost() {
     const [editingPost, setEditingPost] = useState()
     const { id } = useParams()
 
+    console.log("EOIDJEODIJEOIDJEODIJE ID:", id)
+
     useEffect(() => {
         const fetchPost =  async () => {
             const { data, error } = await supabase

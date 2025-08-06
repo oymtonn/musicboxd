@@ -57,7 +57,7 @@ function CreatePostForm({ onChange, onFileChange, onSubmit, post }) {
           onChange={onFileChange}
         />
 
-        <button type="submit">Submit</button>
+        <button type="submit" className="subButton">Submit</button>
       </form>
     </div>
   );
