@@ -44,7 +44,7 @@ The following **required** functionality is completed:
 
 ## Video Walkthrough
 
-Here's a walkthrough of musicboxd in action:
+Here's a quick demo of musicboxd in action:
 
 <img src='1v5xt2x2.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
