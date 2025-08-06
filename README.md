@@ -42,28 +42,9 @@ The following **required** functionality is completed:
   - After a user creates a new post, they can go back and edit the post
   - A previously created post can be deleted from its post page
 
-The following **optional** features are implemented:
-
-
-- [ ] Web app implements pseudo-authentication
-  - Users can only edit and delete posts or delete comments by entering the secret key, which is set by the user during post creation
-  - **or** upon launching the web app, the user is assigned a random user ID. It will be associated with all posts and comments that they make and displayed on them
-  - For both options, only the original user author of a post can update or delete it
-- [ ] Users can repost a previous post by referencing its post ID. On the post page of the new post
-  - Users can repost a previous post by referencing its post ID
-  - On the post page of the new post, the referenced post is displayed and linked, creating a thread
-- [ ] Users can customize the interface
-  - e.g., selecting the color scheme or showing the content and image of each post on the home feed
-- [ ] Users can add more characterics to their posts
-  - Users can share and view web videos
-  - Users can set flags such as "Question" or "Opinion" while creating a post
-  - Users can filter posts by flags on the home feed
-  - Users can upload images directly from their local machine as an image file
-- [ ] Web app displays a loading animation whenever data is being fetched
-
 ## Video Walkthrough
 
-Here's a walkthrough of implemented user stories:
+Here's a walkthrough of musicboxd in action:
 
 <img src='1v5xt2x2.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
