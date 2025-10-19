@@ -1,4 +1,4 @@
-*Musicboxd*
+## Musicboxd
 
 **A social media app made for album ratings!**
 
